@@ -1,0 +1,32 @@
+name: Test Firmware Sync
+
+on:
+  pull_request:
+    paths:
+      - ".github/scripts/has-qidi-q2c-sync-changes.sh"
+      - ".github/scripts/reconcile-qidi-q2c-line-endings.py"
+      - ".github/scripts/sync-qidi-q2c-configs.sh"
+      - ".github/workflows/check-qidi-q2c-firmware.yml"
+      - ".github/workflows/test-firmware-sync.yml"
+      - "tests/test-sync-qidi-q2c-configs.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/scripts/has-qidi-q2c-sync-changes.sh"
+      - ".github/scripts/reconcile-qidi-q2c-line-endings.py"
+      - ".github/scripts/sync-qidi-q2c-configs.sh"
+      - ".github/workflows/check-qidi-q2c-firmware.yml"
+      - ".github/workflows/test-firmware-sync.yml"
+      - "tests/test-sync-qidi-q2c-configs.sh"
+  workflow_dispatch:
+
+jobs:
+  test-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Run synthetic firmware sync tests
+        run: bash tests/test-sync-qidi-q2c-configs.sh
